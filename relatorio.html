@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análise Quinzenal - TechNova Solutions</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f7fa;padding:20px;color:#2d3748;line-height:1.6}
+    .container{max-width:700px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+    .header{background:linear-gradient(135deg,#0f4c75 0%,#1b6ca8 100%);color:#fff;padding:28px 32px}
+    .header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+    .logo{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:0.85}
+    .periodo{background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:20px;font-size:12px}
+    .header h1{font-size:20px;font-weight:600;margin-bottom:4px}
+    .cliente{font-size:26px;font-weight:700}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e2e8f0}
+    .metric{background:#fff;padding:20px;text-align:center}
+    .metric-label{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#718096;margin-bottom:6px}
+    .metric-value{font-size:24px;font-weight:700;color:#0f4c75}
+    .metric-change{font-size:12px;margin-top:4px}
+    .up{color:#e53e3e}
+    .down{color:#38a169}
+    .neutral{color:#718096}
+    .section{padding:24px 32px;border-bottom:1px solid #e2e8f0}
+    .section:last-child{border-bottom:none}
+    .section-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#0f4c75;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .section-title::before{content:'';width:4px;height:18px;background:linear-gradient(180deg,#3182ce,#0f4c75);border-radius:2px}
+    .item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f0f4f8}
+    .item:last-child{border-bottom:none}
+    .icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .icon.up-bg{background:#fed7d7;color:#c53030}
+    .icon.down-bg{background:#c6f6d5;color:#276749}
+    .icon.alert-bg{background:#fefcbf;color:#b7791f}
+    .content{flex:1}
+    .title{font-weight:600;font-size:14px;color:#2d3748}
+    .detail{font-size:13px;color:#718096}
+    .value{font-weight:700;font-size:14px;white-space:nowrap}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;padding:10px 12px;background:#f7fafc;color:#4a5568;font-weight:600;font-size:11px;text-transform:uppercase}
+    td{padding:12px;border-bottom:1px solid #e2e8f0}
+    tr:last-child td{border-bottom:none}
+    .tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+    .tag-green{background:#c6f6d5;color:#276749}
+    .tag-yellow{background:#fefcbf;color:#b7791f}
+    .tag-gray{background:#e2e8f0;color:#4a5568}
+    .tag-blue{background:#bee3f8;color:#2b6cb0}
+    .economia{font-weight:700;color:#276749}
+    .action{display:flex;align-items:flex-start;gap:10px;padding:8px 0}
+    .check{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;color:#fff}
+    .check-done{background:#38a169}
+    .check-progress{background:#3182ce}
+    .result{color:#38a169;font-weight:600}
+    .savings-box{background:linear-gradient(135deg,#f0fff4 0%,#c6f6d5 100%);border-radius:8px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+    .savings-label{font-size:13px;color:#276749;font-weight:500}
+    .savings-value{font-size:22px;font-weight:700;color:#276749}
+    .next{display:flex;align-items:flex-start;gap:10px;padding:8px 0}
+    .bullet{width:8px;height:8px;background:#3182ce;border-radius:50%;margin-top:6px;flex-shrink:0}
+    .highlight{background:#ebf8ff;border-left:4px solid #3182ce;padding:14px 18px;border-radius:0 8px 8px 0;margin-top:16px}
+    .highlight p{font-size:14px;color:#2c5282}
+    .highlight strong{color:#0f4c75}
+    .footer{background:#f7fafc;padding:24px 32px;text-align:center}
+    .footer-name{font-weight:700;color:#0f4c75;font-size:15px}
+    .footer-role{font-size:13px;color:#718096}
+    .footer-contact{font-size:13px;color:#3182ce;margin-top:4px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">Grupo Think | FinOps</div>
+        <div class="periodo">16/01 a 31/01/2026</div>
+      </div>
+      <h1>Análise Quinzenal de Custos</h1>
+      <div class="cliente">TechNova Solutions</div>
+    </div>
+    
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">Custo do Período</div>
+        <div class="metric-value">R$ 142.500</div>
+        <div class="metric-change down">↓ 4,2% vs anterior</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Acumulado Mês</div>
+        <div class="metric-value">R$ 289.700</div>
+        <div class="metric-change neutral">92% do budget</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Projeção Fech.</div>
+        <div class="metric-value">R$ 298.000</div>
+        <div class="metric-change down">↓ 2,8% vs dez</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Principais Variações</div>
+      
+      <div class="item">
+        <div class="icon up-bg">↑</div>
+        <div class="content">
+          <div class="title">Azure Kubernetes Service</div>
+          <div class="detail">Scale-up para suportar nova aplicação</div>
+        </div>
+        <div class="value up">+R$ 5.230</div>
+      </div>
+      
+      <div class="item">
+        <div class="icon down-bg">↓</div>
+        <div class="content">
+          <div class="title">Virtual Machines</div>
+          <div class="detail">Desligamento de ambiente de homologação</div>
+        </div>
+        <div class="value down">-R$ 8.450</div>
+      </div>
+      
+      <div class="item">
+        <div class="icon down-bg">↓</div>
+        <div class="content">
+          <div class="title">AWS S3 Storage</div>
+          <div class="detail">Política de lifecycle aplicada</div>
+        </div>
+        <div class="value down">-R$ 3.120</div>
+      </div>
+      
+      <div class="item">
+        <div class="icon alert-bg">!</div>
+        <div class="content">
+          <div class="title">Disco "bkp-legacy-2023"</div>
+          <div class="detail">Sem acesso há 90+ dias — avaliar exclusão</div>
+        </div>
+        <div class="value" style="color:#b7791f">R$ 780/mês</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Oportunidades de Otimização</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Oportunidade</th>
+            <th>Economia</th>
+            <th>Esforço</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Migrar VMs para série B (dev/hml)</td>
+            <td class="economia">R$ 4.200/mês</td>
+            <td><span class="tag tag-green">Baixa</span></td>
+            <td><span class="tag tag-gray">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Reservar instâncias Azure SQL</td>
+            <td class="economia">R$ 3.800/mês</td>
+            <td><span class="tag tag-green">Baixa</span></td>
+            <td><span class="tag tag-blue">Em análise</span></td>
+          </tr>
+          <tr>
+            <td>Consolidar Storage Accounts</td>
+            <td class="economia">R$ 1.450/mês</td>
+            <td><span class="tag tag-yellow">Média</span></td>
+            <td><span class="tag tag-gray">Pendente</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Ações Realizadas</div>
+      
+      <div class="action">
+        <div class="check check-done">✓</div>
+        <div>Desligamento de 4 VMs ociosas <span class="result">→ -R$ 8.450/mês</span></div>
+      </div>
+      <div class="action">
+        <div class="check check-done">✓</div>
+        <div>Lifecycle policy no S3 <span class="result">→ -R$ 3.120/mês</span></div>
+      </div>
+      <div class="action">
+        <div class="check check-done">✓</div>
+        <div>Tagging de 100% dos recursos Azure e AWS</div>
+      </div>
+      <div class="action">
+        <div class="check check-progress">⟳</div>
+        <div>Análise de Reserved Instances — previsão: 15/02</div>
+      </div>
+      
+      <div class="savings-box">
+        <div class="savings-label">Economia gerada no período</div>
+        <div class="savings-value">R$ 11.570/mês</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Próximos Passos</div>
+      
+      <div class="next">
+        <div class="bullet"></div>
+        <div>Aprovar migração de VMs para série B (economia: R$ 4.200/mês)</div>
+      </div>
+      <div class="next">
+        <div class="bullet"></div>
+        <div>Definir estratégia de Reserved Instances</div>
+      </div>
+      <div class="next">
+        <div class="bullet"></div>
+        <div>Validar exclusão do disco "bkp-legacy-2023"</div>
+      </div>
+      
+      <div class="highlight">
+        <p>📊 Savings acumulado desde out/2025: <strong>R$ 312.800</strong></p>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="footer-name">Mariana Santos</div>
+      <div class="footer-role">FinOps Analyst | Grupo Think</div>
+      <div class="footer-contact">mariana.santos@grupothink.com.br</div>
+    </div>
+  </div>
+</body>
+</html>

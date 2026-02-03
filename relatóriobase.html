@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; padding: 20px; color: #2d3748; line-height: 1.6; }
+    .container { max-width: 700px; margin: 0 auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    
+    /* Header */
+    .header { background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: #fff; padding: 28px 32px; }
+    .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .logo { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.85; }
+    .periodo-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; font-size: 12px; }
+    .header h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+    .header .cliente { font-size: 26px; font-weight: 700; }
+    
+    /* Cards de Métricas */
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #e2e8f0; }
+    .metric-card { background: #fff; padding: 20px; text-align: center; }
+    .metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #718096; margin-bottom: 6px; }
+    .metric-value { font-size: 24px; font-weight: 700; color: #1e3a5f; }
+    .metric-change { font-size: 12px; margin-top: 4px; }
+    .metric-change.up { color: #e53e3e; }
+    .metric-change.down { color: #38a169; }
+    .metric-change.neutral { color: #718096; }
+    
+    /* Seções */
+    .section { padding: 24px 32px; border-bottom: 1px solid #e2e8f0; }
+    .section:last-child { border-bottom: none; }
+    .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #1e3a5f; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .section-title::before { content: ''; width: 4px; height: 18px; background: linear-gradient(180deg, #3182ce, #2d5a87); border-radius: 2px; }
+    
+    /* Variações */
+    .variation-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f4f8; }
+    .variation-item:last-child { border-bottom: none; }
+    .variation-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .variation-icon.increase { background: #fed7d7; color: #c53030; }
+    .variation-icon.decrease { background: #c6f6d5; color: #276749; }
+    .variation-icon.alert { background: #fefcbf; color: #b7791f; }
+    .variation-content { flex: 1; }
+    .variation-title { font-weight: 600; font-size: 14px; color: #2d3748; }
+    .variation-detail { font-size: 13px; color: #718096; }
+    .variation-value { font-weight: 700; font-size: 14px; white-space: nowrap; }
+    .variation-value.increase { color: #c53030; }
+    .variation-value.decrease { color: #276749; }
+    
+    /* Tabela de Oportunidades */
+    .opportunities-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .opportunities-table th { text-align: left; padding: 10px 12px; background: #f7fafc; color: #4a5568; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .opportunities-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
+    .opportunities-table tr:last-child td { border-bottom: none; }
+    .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+    .tag.baixa { background: #c6f6d5; color: #276749; }
+    .tag.media { background: #fefcbf; color: #b7791f; }
+    .tag.alta { background: #fed7d7; color: #c53030; }
+    .tag.pendente { background: #e2e8f0; color: #4a5568; }
+    .tag.andamento { background: #bee3f8; color: #2b6cb0; }
+    .economia-valor { font-weight: 700; color: #276749; }
+    
+    /* Ações */
+    .action-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+    .action-check { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+    .action-check.done { background: #38a169; color: #fff; }
+    .action-check.progress { background: #3182ce; color: #fff; }
+    .action-text { font-size: 14px; }
+    .action-result { color: #38a169; font-weight: 600; }
+    
+    /* Savings Box */
+    .savings-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-radius: 8px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+    .savings-label { font-size: 13px; color: #276749; font-weight: 500; }
+    .savings-value { font-size: 22px; font-weight: 700; color: #276749; }
+    
+    /* Próximos Passos */
+    .next-step { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+    .step-bullet { width: 8px; height: 8px; background: #3182ce; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .step-text { font-size: 14px; }
+    
+    /* Footer */
+    .footer { background: #f7fafc; padding: 24px 32px; text-align: center; }
+    .footer-name { font-weight: 700; color: #1e3a5f; font-size: 15px; }
+    .footer-role { font-size: 13px; color: #718096; }
+    .footer-contact { font-size: 13px; color: #3182ce; margin-top: 4px; }
+    
+    /* Acumulado Highlight */
+    .highlight-box { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 14px 18px; border-radius: 0 8px 8px 0; margin-top: 16px; }
+    .highlight-box p { font-size: 14px; color: #2c5282; }
+    .highlight-box strong { color: #1e3a5f; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">Grupo Think | FinOps</div>
+        <div class="periodo-badge">16/01 a 31/01/2025</div>
+      </div>
+      <h1>Análise Quinzenal de Custos</h1>
+      <div class="cliente">Leo Madeiras</div>
+    </div>
+    
+    <!-- Métricas Principais -->
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Custo do Período</div>
+        <div class="metric-value">R$ 187.4K</div>
+        <div class="metric-change down">↓ 3,2% vs quinzena anterior</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Acumulado Mês</div>
+        <div class="metric-value">R$ 381.5K</div>
+        <div class="metric-change neutral">94% do budget</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Projeção Fech.</div>
+        <div class="metric-value">R$ 385K</div>
+        <div class="metric-change down">↓ 2,1% vs dezembro</div>
+      </div>
+    </div>
+    
+    <!-- Variações -->
+    <div class="section">
+      <div class="section-title">Principais Variações</div>
+      
+      <div class="variation-item">
+        <div class="variation-icon increase">↑</div>
+        <div class="variation-content">
+          <div class="variation-title">Azure SQL Database</div>
+          <div class="variation-detail">Aumento de DTUs para suportar fechamento contábil</div>
+        </div>
+        <div class="variation-value increase">+R$ 4.230</div>
+      </div>
+      
+      <div class="variation-item">
+        <div class="variation-icon decrease">↓</div>
+        <div class="variation-content">
+          <div class="variation-title">Azure Virtual Machines</div>
+          <div class="variation-detail">Desligamento de VMs de homologação ociosas</div>
+        </div>
+        <div class="variation-value decrease">-R$ 8.450</div>
+      </div>
+      
+      <div class="variation-item">
+        <div class="variation-icon decrease">↓</div>
+        <div class="variation-content">
+          <div class="variation-title">AWS EC2</div>
+          <div class="variation-detail">Aplicação de Savings Plans adquiridos em janeiro</div>
+        </div>
+        <div class="variation-value decrease">-R$ 3.120</div>
+      </div>
+      
+      <div class="variation-item">
+        <div class="variation-icon alert">!</div>
+        <div class="variation-content">
+          <div class="variation-title">Storage Account "stlogslegacy"</div>
+          <div class="variation-detail">Sem acesso há 90+ dias — avaliar exclusão</div>
+        </div>
+        <div class="variation-value" style="color: #b7791f;">R$ 890/mês</div>
+      </div>
+    </div>
+    
+    <!-- Oportunidades -->
+    <div class="section">
+      <div class="section-title">Oportunidades de Otimização</div>
+      <table class="opportunities-table">
+        <thead>
+          <tr>
+            <th>Oportunidade</th>
+            <th>Economia</th>
+            <th>Esforço</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Migrar VMs D-series para B-series (não-prod)</td>
+            <td class="economia-valor">R$ 4.200/mês</td>
+            <td><span class="tag baixa">Baixa</span></td>
+            <td><span class="tag pendente">Pendente</span></td>
+          </tr>
+          <tr>
+            <td>Política de lifecycle no Blob Storage</td>
+            <td class="economia-valor">R$ 1.850/mês</td>
+            <td><span class="tag baixa">Baixa</span></td>
+            <td><span class="tag andamento">Em análise</span></td>
+          </tr>
+          <tr>
+            <td>Rightsizing SQL Database PRD-ERP</td>
+            <td class="economia-valor">R$ 3.400/mês</td>
+            <td><span class="tag media">Média</span></td>
+            <td><span class="tag pendente">Aguardando</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Ações Realizadas -->
+    <div class="section">
+      <div class="section-title">Ações Realizadas no Período</div>
+      
+      <div class="action-item">
+        <div class="action-check done">✓</div>
+        <div class="action-text">Ativação de Savings Plans AWS (3 anos) <span class="action-result">→ -R$ 3.120/mês</span></div>
+      </div>
+      <div class="action-item">
+        <div class="action-check done">✓</div>
+        <div class="action-text">Desligamento de 4 VMs de homologação <span class="action-result">→ -R$ 8.450/mês</span></div>
+      </div>
+      <div class="action-item">
+        <div class="action-check done">✓</div>
+        <div class="action-text">Aplicação de tags de centro de custo (98% dos recursos)</div>
+      </div>
+      <div class="action-item">
+        <div class="action-check progress">⟳</div>
+        <div class="action-text">Revisão de Reserved Instances GCP — previsão: 10/02</div>
+      </div>
+      
+      <div class="savings-box">
+        <div class="savings-label">Economia gerada no período</div>
+        <div class="savings-value">R$ 11.570/mês</div>
+      </div>
+    </div>
+    
+    <!-- Próximos Passos -->
+    <div class="section">
+      <div class="section-title">Próximos Passos</div>
+      
+      <div class="next-step">
+        <div class="step-bullet"></div>
+        <div class="step-text">Aprovar migração de VMs para B-series (economia: R$ 4.200/mês)</div>
+      </div>
+      <div class="next-step">
+        <div class="step-bullet"></div>
+        <div class="step-text">Revisar RIs Azure com vencimento em março</div>
+      </div>
+      <div class="next-step">
+        <div class="step-bullet"></div>
+        <div class="step-text">Validar exclusão do Storage Account "stlogslegacy"</div>
+      </div>
+      
+      <div class="highlight-box">
+        <p>📊 Acumulado de savings desde set/2024: <strong>R$ 1,92M</strong></p>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-name">Fabiana Costa</div>
+      <div class="footer-role">Senior FinOps Specialist | Grupo Think</div>
+      <div class="footer-contact">fabiana.costa@grupothink.com.br</div>
+    </div>
+  </div>
+</body>
+</html>
